@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
-#include "PlayerPawn.h"
+#include "BaseCharacter.h"
 #include "CustomMovementComponent.h"
 #include "CustomPlayerController.generated.h"
 
@@ -32,6 +32,6 @@ public:
 	virtual void CallFire();
 
 	UPROPERTY(EditAnywhere)
-		APlayerPawn* MyCharacter;
+		ABaseCharacter* MyCharacter;
 
 };

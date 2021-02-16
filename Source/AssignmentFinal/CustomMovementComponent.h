@@ -6,6 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "CustomMovementComponent.generated.h"
 
+class ABaseCharacter;
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ASSIGNMENTFINAL_API UCustomMovementComponent : public UActorComponent
@@ -18,10 +20,8 @@ public:
 	void Yaw(float Value);
 	void Pitch(float Value);
 	void Fire();
-private:
+
 	UPROPERTY(EditAnywhere)
-		float MoveSpeed = 100.0f;
-	UPROPERTY(EditAnywhere)
-		float RotationSpeed = 500.0f;
+		ABaseCharacter* character;
 		
 };

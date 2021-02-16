@@ -2,28 +2,30 @@
 
 
 #include "CustomMovementComponent.h"
+#include "BaseCharacter.h"
 
 void UCustomMovementComponent::MoveForwards(float Value)
 {
-	FVector DeltaLocation = FVector(Value * MoveSpeed * GetWorld()->DeltaTimeSeconds, 0.0f, 0.0f);
-	GetOwner()->AddActorLocalOffset(DeltaLocation, true);
+	character = Cast<ABaseCharacter>(GetOwner());
+	character->AddMovementInput(character->GetActorForwardVector() * Value);
 }
 
 void UCustomMovementComponent::Strafe(float Value)
 {
-
+	character = Cast<ABaseCharacter>(GetOwner());
+	character->AddMovementInput(character->GetActorRightVector() * Value);
 }
 
 void UCustomMovementComponent::Yaw(float Value)
 {
-	float RotateAmount = Value * RotationSpeed * GetWorld()->DeltaTimeSeconds; FRotator Rotation = FRotator(0.0f, RotateAmount, 0.0f);
-	FQuat DeltaRotation = FQuat(Rotation);
-	GetOwner()->AddActorLocalRotation(DeltaRotation, true);
+	character = Cast<ABaseCharacter>(GetOwner());
+	character->AddControllerYawInput(Value);
 }
 
 void UCustomMovementComponent::Pitch(float Value)
 {
-
+	character = Cast<ABaseCharacter>(GetOwner());
+	character->AddControllerPitchInput(Value);
 }
 
 void UCustomMovementComponent::Fire()

@@ -6,7 +6,7 @@
 void ACustomPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	MyCharacter = Cast<APlayerPawn>(GetPawn());
+	MyCharacter = Cast<ABaseCharacter>(GetPawn());
 }
 
 void ACustomPlayerController::SetupInputComponent()
@@ -32,20 +32,32 @@ void ACustomPlayerController::CallForwards(float Value)
 
 void ACustomPlayerController::CallStrafe(float Value)
 {
-
+	if (MyCharacter)
+	{
+		MyCharacter->playerMovement->Strafe(Value);
+	}
 }
 
 void ACustomPlayerController::CallYaw(float Value)
 {
-
+	if (MyCharacter)
+	{
+		MyCharacter->playerMovement->Yaw(Value);
+	}
 }
 
 void ACustomPlayerController::CallPitch(float Value)
 {
-
+	if (MyCharacter)
+	{
+		MyCharacter->playerMovement->Pitch(Value);
+	}
 }
 
 void ACustomPlayerController::CallFire()
 {
-
+	if (MyCharacter)
+	{
+		MyCharacter->playerMovement->Fire();
+	}
 }
