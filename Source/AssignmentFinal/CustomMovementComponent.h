@@ -7,6 +7,7 @@
 #include "CustomMovementComponent.generated.h"
 
 class ABaseCharacter;
+class ACustomPlayerController;
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )

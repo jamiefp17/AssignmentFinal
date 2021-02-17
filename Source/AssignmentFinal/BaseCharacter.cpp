@@ -21,6 +21,10 @@ ABaseCharacter::ABaseCharacter()
 	camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	camera->SetupAttachment(springArm);
 
+	projectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
+	projectileSpawnPoint->SetupAttachment(springArm);
+	projectileSpawnPoint->SetRelativeLocation(projectileSpawnLocalPosition);
+
 	playerMovement = CreateDefaultSubobject<UCustomMovementComponent>(TEXT("Player Movement"));
 
 	

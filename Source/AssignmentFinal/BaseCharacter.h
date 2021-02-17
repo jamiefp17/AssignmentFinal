@@ -7,6 +7,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "CustomMovementComponent.h"
+#include "ProjectileActor.h"
 #include "BaseCharacter.generated.h"
 
 UCLASS()
@@ -20,6 +21,11 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		UCustomMovementComponent* playerMovement;
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<AProjectileActor> projectileClass;
+	UPROPERTY(EditAnywhere)
+		USceneComponent* projectileSpawnPoint;
+
 //protected:
 //	// Called when the game starts or when spawned
 //	virtual void BeginPlay() override;
@@ -39,9 +45,14 @@ private:
 		USpringArmComponent* springArm;
 	UPROPERTY(EditAnywhere)
 		UCameraComponent* camera;
+	
+	
+	
 
 	UPROPERTY(VisibleAnywhere)
 		FVector springArmLocalPosition = { 0.0f, 30.0f, 70.0f };
 	UPROPERTY(VisibleAnywhere)
 		FVector springArmSocketOffset = { 0.0f, 0.0f, 40.0f };
+	UPROPERTY(VisibleAnywhere)
+		FVector projectileSpawnLocalPosition = { 400.0f, -30.0f, -50.0f };
 };
