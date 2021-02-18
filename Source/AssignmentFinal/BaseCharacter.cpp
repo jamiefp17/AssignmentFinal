@@ -18,6 +18,12 @@ ABaseCharacter::ABaseCharacter()
 	springArm->SetRelativeLocation(springArmLocalPosition);
 	springArm->SocketOffset = springArmSocketOffset;
 
+	collisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Collision Box"));
+	collisionBox->SetupAttachment(playerMesh);
+	collisionBox->SetRelativeScale3D(collisionBoxSize);
+	collisionBox->SetRelativeLocation(collisionBoxPosition);
+	collisionBox->SetCollisionProfileName(collisionBoxName);
+
 	camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	camera->SetupAttachment(springArm);
 
@@ -30,24 +36,33 @@ ABaseCharacter::ABaseCharacter()
 	
 }
 
-// Called when the game starts or when spawned
-//void ABaseCharacter::BeginPlay()
-//{
-//	Super::BeginPlay();
-//	
-//}
-//
-//// Called every frame
-//void ABaseCharacter::Tick(float DeltaTime)
-//{
-//	Super::Tick(DeltaTime);
-//
-//}
-//
-//// Called to bind functionality to input
-//void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-//{
-//	Super::SetupPlayerInputComponent(PlayerInputComponent);
-//
-//}
+void ABaseCharacter::BeginPlay()
+{
+	Super::BeginPlay();
 
+	collisionBox->OnComponentBeginOverlap.AddDynamic(this, &ABaseCharacter::OnOverlapBegin);
+	collisionBox->OnComponentEndOverlap.AddDynamic(this, &ABaseCharacter::OnOverlapEnd);
+
+}
+
+void ABaseCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	//UE_LOG(LogTemp, Warning, TEXT("Enter"));
+}
+
+void ABaseCharacter::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	//UE_LOG(LogTemp, Warning, TEXT("Exit"));
+}
+
+float ABaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Ouch :'("));
+	characterHealth--;
+	if (characterHealth < 1.0f)
+	{
+		Destroy();
+	}
+	return 1.0f; //CHANGE THIS FROM MAGIC NUMBER
+	
+}

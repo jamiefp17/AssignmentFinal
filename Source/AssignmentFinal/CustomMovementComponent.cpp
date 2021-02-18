@@ -31,7 +31,7 @@ void UCustomMovementComponent::Pitch(float Value)
 
 void UCustomMovementComponent::Fire()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Fire Pressed"));
+	//UE_LOG(LogTemp, Warning, TEXT("Fire Pressed"));
 
 	character = Cast<ABaseCharacter>(GetOwner());
 
@@ -39,7 +39,9 @@ void UCustomMovementComponent::Fire()
 	{ 
 		FVector SpawnLocation = character->projectileSpawnPoint->GetComponentLocation();
 		FRotator SpawnRotation = character->projectileSpawnPoint->GetComponentRotation();
+		
 		AProjectileActor* TempProjectile = GetWorld()->SpawnActor<AProjectileActor>(character->projectileClass, SpawnLocation, SpawnRotation);
+		TempProjectile->SetOwner(character);
 	}
 
 
