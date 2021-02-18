@@ -21,7 +21,6 @@ ABaseCharacter::ABaseCharacter()
 	collisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Collision Box"));
 	collisionBox->SetupAttachment(playerMesh);
 	collisionBox->SetRelativeScale3D(collisionBoxSize);
-	collisionBox->SetRelativeLocation(collisionBoxPosition);
 	collisionBox->SetCollisionProfileName(collisionBoxName);
 
 	camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
@@ -42,6 +41,8 @@ void ABaseCharacter::BeginPlay()
 
 	collisionBox->OnComponentBeginOverlap.AddDynamic(this, &ABaseCharacter::OnOverlapBegin);
 	collisionBox->OnComponentEndOverlap.AddDynamic(this, &ABaseCharacter::OnOverlapEnd);
+	gameModeBaseRef = Cast<AAssignmentFinalGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
+
 
 }
 
@@ -62,6 +63,16 @@ float ABaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageE
 	if (characterHealth < 1.0f)
 	{
 		Destroy();
+		if (characterTag == "Player")
+		{
+			gameModeBaseRef->playerDied();
+		}
+		else
+		{
+			gameModeBaseRef->PointScored();
+		}
+		
+		
 	}
 	return 1.0f; //CHANGE THIS FROM MAGIC NUMBER
 	

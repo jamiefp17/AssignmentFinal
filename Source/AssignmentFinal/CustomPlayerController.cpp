@@ -2,6 +2,7 @@
 
 
 #include "CustomPlayerController.h"
+#include "AssignmentFinalGameModeBase.h"
 
 void ACustomPlayerController::BeginPlay()
 {
@@ -27,7 +28,6 @@ void ACustomPlayerController::CallForwards(float Value)
 	{
 		MyCharacter->playerMovement->MoveForwards(Value);
 	}
-
 }
 
 void ACustomPlayerController::CallStrafe(float Value)

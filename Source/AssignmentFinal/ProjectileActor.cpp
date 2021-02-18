@@ -11,7 +11,8 @@ AProjectileActor::AProjectileActor()
 	PrimaryActorTick.bCanEverTick = true;
 
 	projectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
-	projectileMesh->SetupAttachment(RootComponent);
+	//projectileMesh->SetupAttachment(RootComponent);
+	SetRootComponent(projectileMesh);
 	projectileMesh->SetRelativeScale3D(projectileSize);
 	projectileMesh->SetSimulatePhysics(true);
 	projectileMesh->SetNotifyRigidBodyCollision(true);

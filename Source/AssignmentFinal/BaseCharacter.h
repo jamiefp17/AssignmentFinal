@@ -9,7 +9,7 @@
 #include "CustomMovementComponent.h"
 #include "ProjectileActor.h"
 #include "Components/BoxComponent.h"
-#include "string"
+#include "AssignmentFinalGameModeBase.h"
 #include "BaseCharacter.generated.h"
 
 UCLASS()
@@ -37,6 +37,11 @@ public:
 	UPROPERTY(EditAnywhere)
 		UBoxComponent* collisionBox;
 
+	UPROPERTY()
+		AAssignmentFinalGameModeBase* gameModeBaseRef;
+
+	UPROPERTY(VisibleAnywhere)
+		float characterHealth = 1.0f;
 	
 
 private:
@@ -54,9 +59,9 @@ private:
 	UPROPERTY(VisibleAnywhere)
 		FVector collisionBoxSize = { 1.0f, 1.0f, 2.8f };
 	UPROPERTY(VisibleAnywhere)
-		FVector collisionBoxPosition = { 0.0f, 0.0f, 0.0f };
-	UPROPERTY(VisibleAnywhere)
 		FName collisionBoxName = "Trigger";
+	UPROPERTY(EditAnywhere)
+		FName characterTag;
 
 
 	UPROPERTY(VisibleAnywhere)
@@ -66,6 +71,5 @@ private:
 	UPROPERTY(VisibleAnywhere)
 		FVector projectileSpawnLocalPosition = { 400.0f, -30.0f, -50.0f };
 
-	UPROPERTY(VisibleAnywhere)
-		float characterHealth = 1.0f;
+	
 };
