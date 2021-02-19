@@ -8,6 +8,8 @@
 #include "CustomMovementComponent.h"
 #include "CustomPlayerController.generated.h"
 
+class AAssignmentFinalGameModeBase;
+
 
 /**
  * 
@@ -32,7 +34,15 @@ public:
 	virtual void CallPitch(float Value);
 	virtual void CallFire();
 
+	UFUNCTION(BlueprintPure)
+		int GetScore();
+
 	UPROPERTY(EditAnywhere)
 		ABaseCharacter* MyCharacter;
+
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<UUserWidget> gameplayHUDClass;
+	UPROPERTY()
+		UUserWidget* gameplayHUD;
 
 };

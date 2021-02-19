@@ -10,6 +10,7 @@
 #include "ProjectileActor.h"
 #include "Components/BoxComponent.h"
 #include "AssignmentFinalGameModeBase.h"
+#include "Blueprint/UserWidget.h"
 #include "BaseCharacter.generated.h"
 
 UCLASS()
@@ -42,6 +43,13 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 		float characterHealth = 1.0f;
+
+
+
+	/*UPROPERTY(EditAnywhere)
+		TSubclassOf<UUserWidget> gameplayHUDClass;
+	UPROPERTY()
+		UUserWidget* gameplayHUD;*/
 	
 
 private:
@@ -62,6 +70,8 @@ private:
 		FName collisionBoxName = "Trigger";
 	UPROPERTY(EditAnywhere)
 		FName characterTag;
+
+	
 
 
 	UPROPERTY(VisibleAnywhere)

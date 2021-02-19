@@ -7,9 +7,6 @@
 void AAssignmentFinalGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
-
-	
-
 	StartGame();
 }
 

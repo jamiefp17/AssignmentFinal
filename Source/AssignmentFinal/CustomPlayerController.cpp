@@ -8,6 +8,13 @@ void ACustomPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 	MyCharacter = Cast<ABaseCharacter>(GetPawn());
+
+	gameplayHUD = CreateWidget(this, gameplayHUDClass);
+
+	if (gameplayHUD != nullptr)
+	{
+		gameplayHUD->AddToViewport();
+	}
 }
 
 void ACustomPlayerController::SetupInputComponent()
@@ -60,4 +67,9 @@ void ACustomPlayerController::CallFire()
 	{
 		MyCharacter->playerMovement->Fire();
 	}
+}
+
+int ACustomPlayerController::GetScore()
+{
+	return MyCharacter->gameModeBaseRef->score;
 }

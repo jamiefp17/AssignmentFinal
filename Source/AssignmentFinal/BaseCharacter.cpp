@@ -42,6 +42,11 @@ void ABaseCharacter::BeginPlay()
 	collisionBox->OnComponentBeginOverlap.AddDynamic(this, &ABaseCharacter::OnOverlapBegin);
 	collisionBox->OnComponentEndOverlap.AddDynamic(this, &ABaseCharacter::OnOverlapEnd);
 	gameModeBaseRef = Cast<AAssignmentFinalGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
+	//gameplayHUD = CreateWidget(this, gameplayHUDClass);
+	/*if (gameplayHUD != nullptr)
+	{
+		gameplayHUD->AddToViewport();
+	}*/
 
 
 }
@@ -71,8 +76,6 @@ float ABaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageE
 		{
 			gameModeBaseRef->PointScored();
 		}
-		
-		
 	}
 	return 1.0f; //CHANGE THIS FROM MAGIC NUMBER
 	
