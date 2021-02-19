@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "CustomMovementComponent.generated.h"
 
+//Forward Declarations.
 class ABaseCharacter;
 class ACustomPlayerController;
 
@@ -15,14 +16,21 @@ class ASSIGNMENTFINAL_API UCustomMovementComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
+	//******************************  PUBLIC  ******************************
 public:	
-	void MoveForwards(float Value);
-	void Strafe(float Value);
-	void Yaw(float Value);
-	void Pitch(float Value);
-	void Fire();
-
+	//---------------------------------------------------------------------
+	//                    INCLUDES TO OTHER CLASSES
+	//---------------------------------------------------------------------
 	UPROPERTY(EditAnywhere)
-		ABaseCharacter* character;
-		
+		ABaseCharacter* character; //An instance of a character, used as the object which the code will move.
+
+
+	//---------------------------------------------------------------------
+	//                            FUNCTIONS
+	//---------------------------------------------------------------------
+	void MoveForwards(float Value); //Movement.
+	void Strafe(float Value);
+	void Yaw(float Value); //Camera rotation.
+	void Pitch(float Value);
+	void Fire(); //Projectile firing.
 };

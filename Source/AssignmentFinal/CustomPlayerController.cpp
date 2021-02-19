@@ -7,13 +7,13 @@
 void ACustomPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	MyCharacter = Cast<ABaseCharacter>(GetPawn());
+	MyCharacter = Cast<ABaseCharacter>(GetPawn()); //Casts included class in order to use it.
 
-	gameplayHUD = CreateWidget(this, gameplayHUDClass);
+	gameplayHUD = CreateWidget(this, gameplayHUDClass); //Create the HUD element that will be displayed on the screen.
 
-	if (gameplayHUD != nullptr)
+	if (gameplayHUD != nullptr) //Checks to make sure the HUD isn't pointing to a nullptr, so as not to crash the game.
 	{
-		gameplayHUD->AddToViewport();
+		gameplayHUD->AddToViewport(); //Displays the HUD on the screen.
 	}
 }
 
@@ -21,7 +21,7 @@ void ACustomPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
-	check(InputComponent);
+	check(InputComponent); //Input binding based on the project settings set in the editor.
 	InputComponent->BindAxis("Move Forwards", this, &ACustomPlayerController::CallForwards);
 	InputComponent->BindAxis("Strafe", this, &ACustomPlayerController::CallStrafe);
 	InputComponent->BindAxis("Yaw", this, &ACustomPlayerController::CallYaw);
@@ -31,9 +31,9 @@ void ACustomPlayerController::SetupInputComponent()
 
 void ACustomPlayerController::CallForwards(float Value)
 {
-	if (MyCharacter)
+	if (MyCharacter) //Makes sure that a BaseCharacter has been obtained.
 	{
-		MyCharacter->playerMovement->MoveForwards(Value);
+		MyCharacter->playerMovement->MoveForwards(Value); //Passes input along to the customMovement class, which will handle the actual movement.
 	}
 }
 
@@ -69,7 +69,7 @@ void ACustomPlayerController::CallFire()
 	}
 }
 
-int ACustomPlayerController::GetScore()
+int ACustomPlayerController::GetScore() //This is called by a HUD element.
 {
-	return MyCharacter->gameModeBaseRef->score;
+	return MyCharacter->gameModeBaseRef->score; //Finds the current player score, and returns it ready for display.
 }

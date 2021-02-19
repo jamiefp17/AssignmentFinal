@@ -8,6 +8,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "ProjectileActor.generated.h"
 
+//Forward declarations.
 class ABaseCharacter;
 
 UCLASS()
@@ -15,30 +16,41 @@ class ASSIGNMENTFINAL_API AProjectileActor : public AActor
 {
 	GENERATED_BODY()
 	
+	//******************************  PUBLIC  ******************************
 public:	
-	// Sets default values for this actor's properties
+	//---------------------------------------------------------------------
+	//                            FUNCTIONS
+	//---------------------------------------------------------------------
 	AProjectileActor();
 	void BeginPlay();
-	/*void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);*/
 
+
+	//---------------------------------------------------------------------
+	//						    COMPONENTS
+	//---------------------------------------------------------------------
 	UPROPERTY(EditAnywhere)
-		UStaticMeshComponent* projectileMesh;
+		UStaticMeshComponent* projectileMesh; //A static mesh that holds the projectile model.
 	UPROPERTY(EditAnywhere)
-		UProjectileMovementComponent* projectileMovement;
+		UProjectileMovementComponent* projectileMovement; //The projectileMovementComponent that keeps track of how the projectiles should act, and makes them work.
 
-	UPROPERTY(VisibleAnywhere)
-		float projectileSpeed = 2000.0f;
-	UPROPERTY(VisibleAnywhere)
-		float projectileLife = 3.0f;
-	UPROPERTY(VisibleAnywhere)
-		FVector projectileSize = {0.3f, 0.3f, 0.3f};
 
+	//---------------------------------------------------------------------
+	//						       VARIABLES
+	//---------------------------------------------------------------------
 	UPROPERTY(VisibleAnywhere)
-		float projectileDamage = 1.0f;
+		float projectileSpeed = 2000.0f; //The speed at which a projecetile travels when initially spawned in.
+	UPROPERTY(VisibleAnywhere)
+		float projectileLife = 3.0f; //The lifespan in seconds of the projectile.
+	UPROPERTY(VisibleAnywhere)
+		FVector projectileSize = {0.3f, 0.3f, 0.3f}; //The scale of the projectile, relative to the sphere static mesh.
+	UPROPERTY(VisibleAnywhere)
+		float projectileDamage = 1.0f; //USE THIS VARIABLE LATER.
 
+	//******************************  PRIVATE  ******************************
 private:
+	//---------------------------------------------------------------------
+	//                            FUNCTIONS
+	//---------------------------------------------------------------------
 	UFUNCTION()
-		void OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit);
-
+		void OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit); //A function which detects when the projectile has had a collision with another object.
 };

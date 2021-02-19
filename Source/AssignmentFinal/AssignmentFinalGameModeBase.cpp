@@ -2,31 +2,29 @@
 
 
 #include "AssignmentFinalGameModeBase.h"
-#include "CustomPlayerController.h"
 
 void AAssignmentFinalGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
-	StartGame();
+	StartGame(); //Runs the game upon level loadup.
 }
 
 void AAssignmentFinalGameModeBase::PointScored()
 {
-	score++;
-	UE_LOG(LogTemp, Warning, TEXT("Score: %f"), score);
+	score += scoreBaseIncrementationValue; //Score is incremented
 }
 
-void AAssignmentFinalGameModeBase::playerDied()
+void AAssignmentFinalGameModeBase::PlayerDied() //NOT CURRENTLY IMPLEMENTED
 {
 	EndGame(true);
 }
 
-void AAssignmentFinalGameModeBase::StartGame()
+void AAssignmentFinalGameModeBase::StartGame() //NOT CURRENTLY IMPLEMENTED
 {
 	UE_LOG(LogTemp, Warning, TEXT("Started Game"));
 }
 
-void AAssignmentFinalGameModeBase::EndGame(bool Value)
+void AAssignmentFinalGameModeBase::EndGame(bool Value) //NOT CURRENTLY IMPLEMENTED
 {
 	UE_LOG(LogTemp, Warning, TEXT("Ended Game"));
 }
