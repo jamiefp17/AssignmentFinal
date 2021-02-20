@@ -45,6 +45,4 @@ void AProjectileActor::OnHit(AActor* SelfActor, AActor* OtherActor, FVector Norm
 			Destroy(); //Removes projectile if it has hit anything.
 		}
 	}
-	
-	
 }

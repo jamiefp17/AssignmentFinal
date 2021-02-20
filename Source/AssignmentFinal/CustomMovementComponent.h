@@ -8,7 +8,7 @@
 
 //Forward Declarations.
 class ABaseCharacter;
-class ACustomPlayerController;
+//class ACustomPlayerController;
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )

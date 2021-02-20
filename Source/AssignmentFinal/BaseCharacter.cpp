@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BaseCharacter.h"
+#include "CustomPlayerController.h"
 
 ABaseCharacter::ABaseCharacter()
 {
@@ -17,16 +18,16 @@ ABaseCharacter::ABaseCharacter()
 	collisionBox->SetCollisionProfileName(collisionBoxName);
 
 	//Holds the camera to the player, dynamically moving if the camera gets pressed against a wall.
-	springArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm")); 
+	springArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm"));
 	springArm->SetupAttachment(playerMesh);
 	springArm->bUsePawnControlRotation = true; //Allows the pawn to rotate using pitch without keeping the character parallel from the camera.
 	springArm->SetRelativeLocation(springArmLocalPosition);
 	springArm->SocketOffset = springArmSocketOffset;
-
+	
 	//The camera veiwpoint the user see from when playing the game.
-	camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera")); 
+	camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	camera->SetupAttachment(springArm);
-
+	
 	//The point on the character that projectiles will spawn at when being fired.
 	projectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
 	projectileSpawnPoint->SetupAttachment(springArm);
@@ -43,6 +44,12 @@ void ABaseCharacter::BeginPlay()
 	collisionBox->OnComponentBeginOverlap.AddDynamic(this, &ABaseCharacter::OnOverlapBegin); //Sets the functions as delegates.
 	collisionBox->OnComponentEndOverlap.AddDynamic(this, &ABaseCharacter::OnOverlapEnd);
 	gameModeBaseRef = Cast<AAssignmentFinalGameModeBase>(UGameplayStatics::GetGameMode(GetWorld())); //Casts included class in order to use it.
+
+	//if (characterTag == "Enemy")
+	//{
+	//	camera->DestroyComponent();
+	//}
+	
 }
 
 void ABaseCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) //THIS ISN'T CURRENTLY USED YET.

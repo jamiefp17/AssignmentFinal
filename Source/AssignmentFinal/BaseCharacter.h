@@ -13,6 +13,8 @@
 #include "Blueprint/UserWidget.h"
 #include "BaseCharacter.generated.h"
 
+class ACustomPlayerController;
+
 UCLASS()
 class ASSIGNMENTFINAL_API ABaseCharacter : public ACharacter
 {
@@ -62,6 +64,8 @@ public:
 		float damageOutput = 1.0f; //How much damage a projectile does in one hit.
 	UPROPERTY(EditAnywhere)
 		FName characterTag; //A tag that allows me to identify between the player and enemy blueprint classes by the string that is held. "Player" and "Enemy" are used.
+	UPROPERTY(VisibleAnywhere)
+		int finalScore = 10;
 
 
 	//******************************  PRIVATE  ******************************
