@@ -3,11 +3,15 @@
 
 #include "AssignmentFinalGameModeBase.h"
 #include "CustomPlayerController.h"
+#include "BaseCharacter.h"
 
 void AAssignmentFinalGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
-	StartGame(); //Runs the game upon level loadup.
+	if (UGameplayStatics::GetCurrentLevelName(GetWorld()) == gameplayScreen)
+	{
+		StartGame();
+	}
 	controller = Cast<ACustomPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));;
 	/*if (UGameplayStatics::GetCurrentLevelName(GetWorld()) == "StartupScreen")
 	{
@@ -29,7 +33,7 @@ void AAssignmentFinalGameModeBase::PointScored()
 void AAssignmentFinalGameModeBase::PlayerDied() //NOT CURRENTLY IMPLEMENTED
 {
 	controller->ChangeToEndScreen(); //MOVE TO ENDGAME LATER
-	EndGame(true);
+	EndGame();
 }
 
 //void AAssignmentFinalGameModeBase::ChangeToGameplayScreen()
@@ -47,10 +51,20 @@ void AAssignmentFinalGameModeBase::PlayerDied() //NOT CURRENTLY IMPLEMENTED
 void AAssignmentFinalGameModeBase::StartGame() //NOT CURRENTLY IMPLEMENTED
 {
 	UE_LOG(LogTemp, Warning, TEXT("Started Game"));
+
+	GetWorld()->GetTimerManager().SetTimer(enemySpawnTimer, this, &AAssignmentFinalGameModeBase::SpawnEnemy, 1.0f, true);
+	UE_LOG(LogTemp, Warning, TEXT("Should have set timer"));
+	
 }
 
-void AAssignmentFinalGameModeBase::EndGame(bool Value) //NOT CURRENTLY IMPLEMENTED
+void AAssignmentFinalGameModeBase::EndGame() //NOT CURRENTLY IMPLEMENTED
 {
 	UE_LOG(LogTemp, Warning, TEXT("Ended Game"));
 	
+}
+
+void AAssignmentFinalGameModeBase::SpawnEnemy()
+{
+	ABaseCharacter* enemyCharacter = GetWorld()->SpawnActor<ABaseCharacter>(enemyClass, spawnLocation, spawnRotation);
+	UE_LOG(LogTemp, Warning, TEXT("Enemy Spawned"));
 }

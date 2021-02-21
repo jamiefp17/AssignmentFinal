@@ -62,6 +62,11 @@ void ABaseCharacter::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* O
 	//UE_LOG(LogTemp, Warning, TEXT("Exit"));
 }
 
+void ABaseCharacter::PlayProjectileSound()
+{
+	UGameplayStatics::PlaySoundAtLocation(GetWorld(), shootingSound, playerMovement->spawnLocation);
+}
+
 float ABaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) //Function that fires when a character has been hit by a projectile.
 { 
 	characterHealth -= damageOutput; //The character's health is decreased by the amount of damage the projectile-type it was hit with does.

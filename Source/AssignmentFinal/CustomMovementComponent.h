@@ -23,7 +23,7 @@ public:
 	//---------------------------------------------------------------------
 	UPROPERTY(EditAnywhere)
 		ABaseCharacter* character; //An instance of a character, used as the object which the code will move.
-
+	
 
 	//---------------------------------------------------------------------
 	//                            FUNCTIONS
@@ -33,4 +33,11 @@ public:
 	void Yaw(float Value); //Camera rotation.
 	void Pitch(float Value);
 	void Fire(); //Projectile firing.
+
+
+	//---------------------------------------------------------------------
+	//						       VARIABLES
+	//---------------------------------------------------------------------
+	UPROPERTY()
+		FVector spawnLocation;
 };

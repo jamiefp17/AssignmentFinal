@@ -34,10 +34,10 @@ void UCustomMovementComponent::Fire()
 	character = Cast<ABaseCharacter>(GetOwner());
 	if (character->projectileClass) //Checks to make sure that the character has a projectile class allocated.
 	{ 
-		FVector SpawnLocation = character->projectileSpawnPoint->GetComponentLocation(); //Updates the position that the projectile will spawn in, but finding the world position from its relative one attached to the character.
+		spawnLocation = character->projectileSpawnPoint->GetComponentLocation(); //Updates the position that the projectile will spawn in, but finding the world position from its relative one attached to the character.
 		FRotator SpawnRotation = character->projectileSpawnPoint->GetComponentRotation();
 
-		AProjectileActor* TempProjectile = GetWorld()->SpawnActor<AProjectileActor>(character->projectileClass, SpawnLocation, SpawnRotation); //Spawns the projectile in the determined location.
+		AProjectileActor* TempProjectile = GetWorld()->SpawnActor<AProjectileActor>(character->projectileClass, spawnLocation, SpawnRotation); //Spawns the projectile in the determined location.
 		TempProjectile->SetOwner(character); //Sets the projectiles owner to the character that shot it. This is required for the ApplyDamage function.
 	}
 }

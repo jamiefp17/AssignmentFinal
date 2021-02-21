@@ -11,6 +11,7 @@
 #include "Components/BoxComponent.h"
 #include "AssignmentFinalGameModeBase.h"
 #include "Blueprint/UserWidget.h"
+#include "Sound/SoundBase.h"
 #include "BaseCharacter.generated.h"
 
 class ACustomPlayerController;
@@ -44,6 +45,8 @@ public:
 		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	UFUNCTION()
 		void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	UFUNCTION()
+		void PlayProjectileSound();
 
 	
 	//---------------------------------------------------------------------
@@ -85,6 +88,8 @@ private:
 		USpringArmComponent* springArm; //Holds the camera to the player, dynamically moving if the camera gets pressed against a wall.
 	UPROPERTY(EditAnywhere)
 		UCameraComponent* camera; //The camera veiwpoint the user see from when playing the game.
+	UPROPERTY(EditAnywhere)
+		USoundBase* shootingSound;
 	
 
 	//---------------------------------------------------------------------

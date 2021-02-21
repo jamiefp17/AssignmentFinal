@@ -101,6 +101,7 @@ void ACustomPlayerController::CallFire()
 	if (MyCharacter)
 	{
 		MyCharacter->playerMovement->Fire();
+		MyCharacter->PlayProjectileSound();
 	}
 }
 

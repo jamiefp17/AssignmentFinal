@@ -7,9 +7,11 @@
 #include "GameFramework/Controller.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Pawn.h"
+//#include "Engine/EngineTypes.h"
 #include "AssignmentFinalGameModeBase.generated.h"
 
 class ACustomPlayerController;
+class ABaseCharacter;
 
 UCLASS()
 class ASSIGNMENTFINAL_API AAssignmentFinalGameModeBase : public AGameModeBase
@@ -23,6 +25,7 @@ public:
 	//---------------------------------------------------------------------
 	UPROPERTY(VisibleAnywhere)
 		ACustomPlayerController* controller;
+
 	//---------------------------------------------------------------------
 	//                            FUNCTIONS
 	//---------------------------------------------------------------------
@@ -40,17 +43,22 @@ public:
 	//---------------------------------------------------------------------
 	UPROPERTY(VisibleAnywhere)
 		float score = 0.0f; //The score that is gained from defeating enemies, determining how well the user has done.
+	
 
 
 	//******************************  PRIVATE  ******************************
 private:
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<ABaseCharacter> enemyClass;
 	//---------------------------------------------------------------------
 	//                            FUNCTIONS
 	//---------------------------------------------------------------------
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 		void StartGame(); //Sets up the game ready for the user.
 	UFUNCTION()
-		void EndGame(bool Value); //Wraps everything up, ending the game.
+		void EndGame(); //Wraps everything up, ending the game.
+	UFUNCTION(BlueprintCallable)
+		void SpawnEnemy();
 
 
 	//---------------------------------------------------------------------
@@ -58,4 +66,12 @@ private:
 	//---------------------------------------------------------------------
 	UPROPERTY(VisibleAnywhere)
 		float scoreBaseIncrementationValue = 1.0f; //The base value that the score will increment by upon the defeat of an enemy.
+	UPROPERTY(EditAnywhere)
+		FTimerHandle enemySpawnTimer;
+	UPROPERTY(VisibleAnywhere)
+		FVector spawnLocation = { 0.0f, 0.0f, 0.0f };
+	UPROPERTY(VisibleAnywhere)
+		FRotator spawnRotation = { 0.0f, 0.0f, 0.0f };
+	UPROPERTY()
+		FString gameplayScreen = "GameplayScreen";
 };
