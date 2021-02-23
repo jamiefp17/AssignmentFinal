@@ -35,6 +35,9 @@ ABaseCharacter::ABaseCharacter()
 
 	//Uses the CustomMovementComponent, which handles user input, allowing the user to control the character.
 	playerMovement = CreateDefaultSubobject<UCustomMovementComponent>(TEXT("Player Movement"));
+
+	//pointTrigger = CreateDefaultSubobject<APointTrigger>(TEXT("Point Trigger"));
+	//pointTrigger = Cast<APointTrigger>(pointTrigger);
 }
 
 void ABaseCharacter::BeginPlay()
@@ -45,21 +48,34 @@ void ABaseCharacter::BeginPlay()
 	collisionBox->OnComponentEndOverlap.AddDynamic(this, &ABaseCharacter::OnOverlapEnd);
 	gameModeBaseRef = Cast<AAssignmentFinalGameModeBase>(UGameplayStatics::GetGameMode(GetWorld())); //Casts included class in order to use it.
 
-	//if (characterTag == "Enemy")
-	//{
-	//	camera->DestroyComponent();
-	//}
-	
 }
 
 void ABaseCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) //THIS ISN'T CURRENTLY USED YET.
 {
-	//UE_LOG(LogTemp, Warning, TEXT("Enter"));
+	
+	if (characterTag == "Player")
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Enter"));
+		
+		if (OtherActor->ActorHasTag("PointTrigger"))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Working Point Trigger"));
+			pointTrigger->OnCollisionWithPlayer(OtherActor);
+			/*if (OtherActor != nullptr)
+			{
+				OtherActor->Destroy();
+			}*/
+		}
+		
+	}
 }
 
 void ABaseCharacter::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	//UE_LOG(LogTemp, Warning, TEXT("Exit"));
+	if (characterTag == "Player")
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Exit"));
+	}
 }
 
 void ABaseCharacter::PlayProjectileSound()

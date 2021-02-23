@@ -39,22 +39,13 @@ void AAssignmentFinalGameModeBase::PlayerDied() //NOT CURRENTLY IMPLEMENTED
 //void AAssignmentFinalGameModeBase::ChangeToGameplayScreen()
 //{
 //	UGameplayStatics::OpenLevel(GetWorld(), "GameplayScreen");
-//	controller->bShowMouseCursor = false;
-//	UWidgetBlueprintLibrary::SetInputMode_GameOnly(controller);
-//	controller->startupHUD->RemoveFromViewport();
-//	if (controller->gameplayHUD != nullptr) //Checks to make sure the HUD isn't pointing to a nullptr, so as not to crash the game.
-//	{
-//		controller->gameplayHUD->AddToViewport(); //Displays the HUD on the screen.
-//	}
 //}
 
 void AAssignmentFinalGameModeBase::StartGame() //NOT CURRENTLY IMPLEMENTED
 {
 	UE_LOG(LogTemp, Warning, TEXT("Started Game"));
 
-	GetWorld()->GetTimerManager().SetTimer(enemySpawnTimer, this, &AAssignmentFinalGameModeBase::SpawnEnemy, 1.0f, true);
-	UE_LOG(LogTemp, Warning, TEXT("Should have set timer"));
-	
+	GetWorld()->GetTimerManager().SetTimer(enemySpawnTimer, this, &AAssignmentFinalGameModeBase::SpawnEnemy, 3.0f, true);
 }
 
 void AAssignmentFinalGameModeBase::EndGame() //NOT CURRENTLY IMPLEMENTED
@@ -66,5 +57,4 @@ void AAssignmentFinalGameModeBase::EndGame() //NOT CURRENTLY IMPLEMENTED
 void AAssignmentFinalGameModeBase::SpawnEnemy()
 {
 	ABaseCharacter* enemyCharacter = GetWorld()->SpawnActor<ABaseCharacter>(enemyClass, spawnLocation, spawnRotation);
-	UE_LOG(LogTemp, Warning, TEXT("Enemy Spawned"));
 }

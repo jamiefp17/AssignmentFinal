@@ -12,6 +12,7 @@
 #include "AssignmentFinalGameModeBase.h"
 #include "Blueprint/UserWidget.h"
 #include "Sound/SoundBase.h"
+#include "PointTrigger.h"
 #include "BaseCharacter.generated.h"
 
 class ACustomPlayerController;
@@ -33,6 +34,8 @@ public:
 	UPROPERTY()
 		AAssignmentFinalGameModeBase* gameModeBaseRef; //Uses the gameModeBase, which allows for information to pass between the game mode, and the characters. 
 													   //This would include awarding 'score' when enemies are killed, and ending the game when the player character dies.
+	UPROPERTY()
+		APointTrigger* pointTrigger;
 
 
 	//---------------------------------------------------------------------
@@ -73,6 +76,7 @@ public:
 
 	//******************************  PRIVATE  ******************************
 private:
+	
 	//---------------------------------------------------------------------
 	//                            FUNCTIONS
 	//---------------------------------------------------------------------

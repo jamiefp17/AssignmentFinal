@@ -7,7 +7,6 @@
 #include "GameFramework/Controller.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Pawn.h"
-//#include "Engine/EngineTypes.h"
 #include "AssignmentFinalGameModeBase.generated.h"
 
 class ACustomPlayerController;
@@ -34,8 +33,6 @@ public:
 		void PointScored(); //An enemy has been defeated, and the score is going to be incremented.
 	UFUNCTION()
 		void PlayerDied(); //The player character has run out of health, and so the game should end. Takes the score that the player got before dying.
-	/*UFUNCTION(BlueprintCallable)
-		void ChangeToGameplayScreen(); */
 
 
 	//---------------------------------------------------------------------
@@ -53,12 +50,14 @@ private:
 	//---------------------------------------------------------------------
 	//                            FUNCTIONS
 	//---------------------------------------------------------------------
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION()
 		void StartGame(); //Sets up the game ready for the user.
 	UFUNCTION()
 		void EndGame(); //Wraps everything up, ending the game.
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION()
 		void SpawnEnemy();
+	/*UFUNCTION()
+		void ChangeToGameplayScreen();*/
 
 
 	//---------------------------------------------------------------------

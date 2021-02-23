@@ -29,7 +29,6 @@ void AProjectileActor::BeginPlay()
 
 	
 	OnActorHit.AddDynamic(this, &AProjectileActor::OnHit); //Dynamic deegate.
-
 }
 
 void AProjectileActor::OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit) //A function which detects when the projectile has had a collision with another object. 
@@ -43,6 +42,11 @@ void AProjectileActor::OnHit(AActor* SelfActor, AActor* OtherActor, FVector Norm
 			UGameplayStatics::ApplyDamage(OtherActor, projectileDamage, ProjectileOwner->GetInstigatorController(), this, UDamageType::StaticClass()); //Uses the applyDamage function.
 			
 			Destroy(); //Removes projectile if it has hit anything.
+		}
+		else
+		{
+			UGameplayStatics::ApplyDamage(OtherActor, projectileDamage, ProjectileOwner->GetInstigatorController(), this, UDamageType::StaticClass()); //Uses the applyDamage function.
+
 		}
 	}
 }
