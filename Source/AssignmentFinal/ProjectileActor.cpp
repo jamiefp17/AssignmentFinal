@@ -19,6 +19,8 @@ AProjectileActor::AProjectileActor()
 	projectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement"));
 	projectileMovement->InitialSpeed = projectileSpeed;
 	InitialLifeSpan = projectileLife;
+
+	forceActor = CreateDefaultSubobject<AForceActor>(TEXT("Force Actor"));
 }
 
 void AProjectileActor::BeginPlay()
@@ -39,6 +41,10 @@ void AProjectileActor::OnHit(AActor* SelfActor, AActor* OtherActor, FVector Norm
 			UGameplayStatics::ApplyDamage(OtherActor, projectileDamage, ProjectileOwner->GetInstigatorController(), this, UDamageType::StaticClass()); //Uses the applyDamage function.
 			
 			Destroy(); //Removes projectile if it has hit anything.
+		}
+		else if (OtherActor->ActorHasTag(forceBox)) //Hit the cube that has forces
+		{
+			forceActor->OnProjectileHit(OtherActor); //Calls the function to show off forces.
 		}
 	}
 }

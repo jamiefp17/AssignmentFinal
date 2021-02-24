@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "ForceActor.h"
 #include "ProjectileActor.generated.h"
 
 //Forward declarations.
@@ -43,6 +44,7 @@ public:
 
 	//******************************  PRIVATE  ******************************
 private:
+	AForceActor* forceActor;
 	//---------------------------------------------------------------------
 	//                            FUNCTIONS
 	//---------------------------------------------------------------------
@@ -59,4 +61,6 @@ private:
 		float projectileLife = 3.0f; //The lifespan in seconds of the projectile.
 	UPROPERTY(VisibleAnywhere)
 		FVector projectileSize = { 0.3f, 0.3f, 0.3f }; //The scale of the projectile, relative to the sphere static mesh.
+	UPROPERTY()
+		FName forceBox = "Force";
 };
