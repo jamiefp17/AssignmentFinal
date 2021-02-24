@@ -22,7 +22,7 @@ public:
 	//---------------------------------------------------------------------
 	//                    INCLUDES TO OTHER CLASSES
 	//---------------------------------------------------------------------
-	APawn* PlayerCharacter;
+	APawn* PlayerCharacter; //Automatically aquires the player in order to track.
 
 
 	//---------------------------------------------------------------------

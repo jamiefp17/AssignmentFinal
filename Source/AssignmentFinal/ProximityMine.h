@@ -18,21 +18,11 @@ public:
 
 	ADestructibleActor* proximityMine;
 
-	/*UPROPERTY(VisibleAnywhere)
-		UStaticMeshComponent* boxMesh;
-	UPROPERTY(EditAnywhere)
-		UBoxComponent* collisionRadius;*/
-	/*UPROPERTY(VisibleAnywhere)
-		UPrimitiveComponent* primitiveComp;*/
 protected:
 	void BeginPlay() override;
+
 private:
 	UFUNCTION()
 		void OnDestruction(const FVector& HitPoint, const FVector& HitDirection);
-	/*UPROPERTY(VisibleAnywhere)
-		FVector radiusSize = { 3.0f, 3.0f, 3.0f };
-
-	UPROPERTY(VisibleAnywhere)
-		FName collisionRadiusName = "Mine";*/
 	
 };

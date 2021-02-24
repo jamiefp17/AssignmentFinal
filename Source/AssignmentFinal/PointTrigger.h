@@ -7,6 +7,7 @@
 #include "Components/BoxComponent.h"
 #include "PointTrigger.generated.h"
 
+//Forward Declarations.
 class ABaseCharacter;
 
 UCLASS()
@@ -14,30 +15,32 @@ class ASSIGNMENTFINAL_API APointTrigger : public AActor
 {
 	GENERATED_BODY()
 	
+	//******************************  PUBLIC  ******************************
 public:	
-	// Sets default values for this actor's properties
+	//---------------------------------------------------------------------
+	//                            FUNCTIONS
+	//---------------------------------------------------------------------
 	APointTrigger();
 
 	UFUNCTION()
-		void OnCollisionWithPlayer(AActor* temp);
-	/*UFUNCTION()
-		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);*/
+		void OnCollisionWithPlayer(AActor* temp, AAssignmentFinalGameModeBase* gameMode); //Called by the BaseCharacter class when it has detected a collision with a pointTrigger.
 
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-	
-
+	//******************************  PRIVATE  ******************************
 private:
-	
-
+	//---------------------------------------------------------------------
+	//						    COMPONENTS
+	//---------------------------------------------------------------------
 	UPROPERTY(EditAnywhere)
-		UStaticMeshComponent* boxMesh;
+		UStaticMeshComponent* boxMesh; //A static mesh that holds the box model.
+
+
+	//---------------------------------------------------------------------
+	//						       VARIABLES
+	//---------------------------------------------------------------------
 	UPROPERTY(VisibleAnywhere)
-		FVector boxSize = { 0.3f, 0.3f, 0.3f };
+		FVector boxSize = { 0.3f, 0.3f, 0.3f }; //The size of the box.
 	UPROPERTY(VisibleAnywhere)
-		UBoxComponent* collisionBox;
+		UBoxComponent* collisionBox; //Allows for the player to detect there has been a collision.
 
 };

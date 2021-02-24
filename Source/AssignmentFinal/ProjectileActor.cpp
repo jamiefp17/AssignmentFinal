@@ -4,10 +4,9 @@
 #include "ProjectileActor.h"
 #include "BaseCharacter.h"
 
-// Sets default values
 AProjectileActor::AProjectileActor()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	//A static mesh that holds the projectile model.
 	projectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
@@ -20,18 +19,16 @@ AProjectileActor::AProjectileActor()
 	projectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement"));
 	projectileMovement->InitialSpeed = projectileSpeed;
 	InitialLifeSpan = projectileLife;
-	
 }
 
 void AProjectileActor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	
 	OnActorHit.AddDynamic(this, &AProjectileActor::OnHit); //Dynamic deegate.
 }
 
-void AProjectileActor::OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit) //A function which detects when the projectile has had a collision with another object. 
+void AProjectileActor::OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit)
 {
 	AActor* ProjectileOwner = GetOwner(); //Gets the owner of the projectile.
 
@@ -42,11 +39,6 @@ void AProjectileActor::OnHit(AActor* SelfActor, AActor* OtherActor, FVector Norm
 			UGameplayStatics::ApplyDamage(OtherActor, projectileDamage, ProjectileOwner->GetInstigatorController(), this, UDamageType::StaticClass()); //Uses the applyDamage function.
 			
 			Destroy(); //Removes projectile if it has hit anything.
-		}
-		else
-		{
-			UGameplayStatics::ApplyDamage(OtherActor, projectileDamage, ProjectileOwner->GetInstigatorController(), this, UDamageType::StaticClass()); //Uses the applyDamage function.
-
 		}
 	}
 }

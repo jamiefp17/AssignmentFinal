@@ -3,7 +3,6 @@
 
 #include "CustomMovementComponent.h"
 #include "BaseCharacter.h"
-//#include "CustomPlayerController.h"
 
 void UCustomMovementComponent::MoveForwards(float Value)
 {
@@ -35,9 +34,9 @@ void UCustomMovementComponent::Fire()
 	if (character->projectileClass) //Checks to make sure that the character has a projectile class allocated.
 	{ 
 		spawnLocation = character->projectileSpawnPoint->GetComponentLocation(); //Updates the position that the projectile will spawn in, but finding the world position from its relative one attached to the character.
-		FRotator SpawnRotation = character->projectileSpawnPoint->GetComponentRotation();
+		spawnRotation = character->projectileSpawnPoint->GetComponentRotation();
 
-		AProjectileActor* TempProjectile = GetWorld()->SpawnActor<AProjectileActor>(character->projectileClass, spawnLocation, SpawnRotation); //Spawns the projectile in the determined location.
+		AProjectileActor* TempProjectile = GetWorld()->SpawnActor<AProjectileActor>(character->projectileClass, spawnLocation, spawnRotation); //Spawns the projectile in the determined location.
 		TempProjectile->SetOwner(character); //Sets the projectiles owner to the character that shot it. This is required for the ApplyDamage function.
 	}
 }

@@ -15,6 +15,7 @@
 #include "PointTrigger.h"
 #include "BaseCharacter.generated.h"
 
+//Forward Declarations.
 class ACustomPlayerController;
 
 UCLASS()
@@ -35,7 +36,7 @@ public:
 		AAssignmentFinalGameModeBase* gameModeBaseRef; //Uses the gameModeBase, which allows for information to pass between the game mode, and the characters. 
 													   //This would include awarding 'score' when enemies are killed, and ending the game when the player character dies.
 	UPROPERTY()
-		APointTrigger* pointTrigger;
+	APointTrigger* pointTrigger; //Uses the pointTrigger, which allows the character to interact with the point providing triggers placed around the map.
 
 
 	//---------------------------------------------------------------------
@@ -45,11 +46,9 @@ public:
 	void BeginPlay();
 
 	UFUNCTION()
-		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult); //Detects when a collision has occured with a character.
 	UFUNCTION()
-		void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-	UFUNCTION()
-		void PlayProjectileSound();
+		void PlayProjectileSound(); //Called by the playerMovement class to play the projectile shooting sound.
 
 	
 	//---------------------------------------------------------------------
@@ -68,15 +67,16 @@ public:
 		float characterHealth = 1.0f; //The health that characters have. This is the same for the player and enemies.
 	UPROPERTY(VisibleAnywhere)
 		float damageOutput = 1.0f; //How much damage a projectile does in one hit.
-	UPROPERTY(EditAnywhere)
-		FName characterTag; //A tag that allows me to identify between the player and enemy blueprint classes by the string that is held. "Player" and "Enemy" are used.
-	UPROPERTY(VisibleAnywhere)
-		int finalScore = 10;
 
 
 	//******************************  PRIVATE  ******************************
 private:
-	
+	//---------------------------------------------------------------------
+	//                    INCLUDES TO OTHER CLASSES
+	//---------------------------------------------------------------------
+	AProjectileActor* projectile; //Allows access to the damage value to use when applying damage.
+
+
 	//---------------------------------------------------------------------
 	//                            FUNCTIONS
 	//---------------------------------------------------------------------
@@ -93,7 +93,7 @@ private:
 	UPROPERTY(EditAnywhere)
 		UCameraComponent* camera; //The camera veiwpoint the user see from when playing the game.
 	UPROPERTY(EditAnywhere)
-		USoundBase* shootingSound;
+		USoundBase* shootingSound; //The sound that is played when a projectile is fired.
 	
 
 	//---------------------------------------------------------------------
@@ -109,6 +109,4 @@ private:
 		FVector springArmSocketOffset = { 0.0f, 0.0f, 40.0f }; //The socket offset for the spring arm, lifting the camera so it doesn't just look dead on.
 	UPROPERTY(VisibleAnywhere)
 		FVector projectileSpawnLocalPosition = { 400.0f, -30.0f, -50.0f }; //The relative position of the projectile spawn-point from the spring arm.
-
-	
 };

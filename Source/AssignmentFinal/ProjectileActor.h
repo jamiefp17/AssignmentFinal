@@ -38,13 +38,8 @@ public:
 	//						       VARIABLES
 	//---------------------------------------------------------------------
 	UPROPERTY(VisibleAnywhere)
-		float projectileSpeed = 2000.0f; //The speed at which a projecetile travels when initially spawned in.
-	UPROPERTY(VisibleAnywhere)
-		float projectileLife = 3.0f; //The lifespan in seconds of the projectile.
-	UPROPERTY(VisibleAnywhere)
-		FVector projectileSize = {0.3f, 0.3f, 0.3f}; //The scale of the projectile, relative to the sphere static mesh.
-	UPROPERTY(VisibleAnywhere)
-		float projectileDamage = 1.0f; //USE THIS VARIABLE LATER.
+		float projectileDamage = 1.0f; //The damage value the projectiles inflict. Currently the health is 1.0f as well, so a single projectile will kill a character.
+
 
 	//******************************  PRIVATE  ******************************
 private:
@@ -53,4 +48,15 @@ private:
 	//---------------------------------------------------------------------
 	UFUNCTION()
 		void OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit); //A function which detects when the projectile has had a collision with another object.
+
+
+	//---------------------------------------------------------------------
+	//						       VARIABLES
+	//---------------------------------------------------------------------
+	UPROPERTY(VisibleAnywhere)
+		float projectileSpeed = 2000.0f; //The speed at which a projecetile travels when initially spawned in.
+	UPROPERTY(VisibleAnywhere)
+		float projectileLife = 3.0f; //The lifespan in seconds of the projectile.
+	UPROPERTY(VisibleAnywhere)
+		FVector projectileSize = { 0.3f, 0.3f, 0.3f }; //The scale of the projectile, relative to the sphere static mesh.
 };

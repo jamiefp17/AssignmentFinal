@@ -33,11 +33,9 @@ ABaseCharacter::ABaseCharacter()
 	projectileSpawnPoint->SetupAttachment(springArm);
 	projectileSpawnPoint->SetRelativeLocation(projectileSpawnLocalPosition);
 
-	//Uses the CustomMovementComponent, which handles user input, allowing the user to control the character.
-	playerMovement = CreateDefaultSubobject<UCustomMovementComponent>(TEXT("Player Movement"));
+	playerMovement = CreateDefaultSubobject<UCustomMovementComponent>(TEXT("Player Movement")); //Uses the CustomMovementComponent, which handles user input, allowing the user to control the character.
 
-	//pointTrigger = CreateDefaultSubobject<APointTrigger>(TEXT("Point Trigger"));
-	//pointTrigger = Cast<APointTrigger>(pointTrigger);
+	projectile = CreateDefaultSubobject<AProjectileActor>(TEXT("Projectile")); //Uses the pointTrigger, which allows the character to interact with the point providing triggers placed around the map.
 }
 
 void ABaseCharacter::BeginPlay()
@@ -45,51 +43,36 @@ void ABaseCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	collisionBox->OnComponentBeginOverlap.AddDynamic(this, &ABaseCharacter::OnOverlapBegin); //Sets the functions as delegates.
-	collisionBox->OnComponentEndOverlap.AddDynamic(this, &ABaseCharacter::OnOverlapEnd);
 	gameModeBaseRef = Cast<AAssignmentFinalGameModeBase>(UGameplayStatics::GetGameMode(GetWorld())); //Casts included class in order to use it.
 
 }
 
-void ABaseCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) //THIS ISN'T CURRENTLY USED YET.
+void ABaseCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	
-	if (characterTag == "Player")
+	if (ActorHasTag("Player")) //Makes sure the collision only works on the player character.
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Enter"));
-		
-		if (OtherActor->ActorHasTag("PointTrigger"))
+		if (OtherActor->ActorHasTag("PointTrigger")) //Checks the collision to see if the collision was with a pointTrigger.
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Working Point Trigger"));
-			pointTrigger->OnCollisionWithPlayer(OtherActor);
-			/*if (OtherActor != nullptr)
-			{
-				OtherActor->Destroy();
-			}*/
+			pointTrigger->OnCollisionWithPlayer(OtherActor, gameModeBaseRef); //Calls the collision fuction within the pointTrigger class.
 		}
 		
-	}
-}
-
-void ABaseCharacter::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-	if (characterTag == "Player")
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Exit"));
 	}
 }
 
 void ABaseCharacter::PlayProjectileSound()
 {
 	UGameplayStatics::PlaySoundAtLocation(GetWorld(), shootingSound, playerMovement->spawnLocation);
+	//MAKE ENEMY SHOTS DIFFERENT PITCH BY CHECKING THE TAG
 }
 
-float ABaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) //Function that fires when a character has been hit by a projectile.
+float ABaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 { 
-	characterHealth -= damageOutput; //The character's health is decreased by the amount of damage the projectile-type it was hit with does.
+	characterHealth -= projectile->projectileDamage; //The character's health is decreased by the amount of damage the projectile-type it was hit with does.
 	if (characterHealth < 1.0f) //The character has run out of health, and is now "dead".
 	{
 		Destroy(); //The character is removed from the scene.
-		if (characterTag == "Player") //Now that the character is gone, we need to decide how the game will react to it. If the character was tagged as being the player, the game should end.
+		if (ActorHasTag("Player")) //Now that the character is gone, we need to decide how the game will react to it. If the character was tagged as being the player, the game should end.
 		{
 			gameModeBaseRef->PlayerDied();
 		}
@@ -98,5 +81,5 @@ float ABaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageE
 			gameModeBaseRef->PointScored();
 		}
 	}
-	return damageOutput;
+	return projectile->projectileDamage;
 }

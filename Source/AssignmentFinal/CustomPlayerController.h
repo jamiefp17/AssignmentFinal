@@ -7,12 +7,10 @@
 #include "BaseCharacter.h"
 #include "CustomMovementComponent.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
-#include "Engine/GameInstance.h" //Game instance stuff. MAY NOT USE
 #include "CustomPlayerController.generated.h"
 
 //Forward Declarations.
 class AAssignmentFinalGameModeBase;
-class UShooterGameInstance; //DELETE
 
 UCLASS()
 class ASSIGNMENTFINAL_API ACustomPlayerController : public APlayerController
@@ -23,8 +21,6 @@ class ASSIGNMENTFINAL_API ACustomPlayerController : public APlayerController
 protected:
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere)
-		float score;
 
 	//******************************  PUBLIC  ******************************
 public:
@@ -33,21 +29,24 @@ public:
 	//---------------------------------------------------------------------
 	UPROPERTY(EditAnywhere)
 		ABaseCharacter* MyCharacter; //The player character. Acts as an inbetween between the player and the actual movement, taking user input and passing along the information.
-	UPROPERTY(EditAnywhere)
-		TSubclassOf<UUserWidget> gameplayHUDClass; //A subclass of the HUD for the gameplay screen.
 	UPROPERTY()
-		UUserWidget* gameplayHUD; //Uses the userWidget class to make a HUD to show on the screen.
+		AAssignmentFinalGameModeBase* gameMode; //A reference to the game mode base. Allows for communication with the game mode, allowing for score incrementation and 
+
+	//subclasses of the HUD for the different screens.
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<UUserWidget> gameplayHUDClass; 
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<UUserWidget> startupHUDClass;
-	UPROPERTY()
-		UUserWidget* startupHUD;
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<UUserWidget> endHUDClass;
+
+	//Uses the userWidget class to make a HUD to show on the screen.
+	UPROPERTY()
+		UUserWidget* gameplayHUD; 
+	UPROPERTY()
+		UUserWidget* startupHUD;
 	UPROPERTY()
 		UUserWidget* endHUD;
-	UPROPERTY()
-		UShooterGameInstance* game; //DELETE LATER IF NOT WORKING
-
 
 
 	//---------------------------------------------------------------------
@@ -63,25 +62,23 @@ public:
 
 	UFUNCTION(BlueprintPure)
 		int GetScore(); //Used by an updating text box in the HUD to show the most up-to-date score the player has.
+
+	//Changes the screen that's being displayed.
 	UFUNCTION(BlueprintCallable)
 		void ChangeToGameplayScreen();
 	UFUNCTION()
-		void ChangeToEndScreen();
+		void ChangeToEndScreen(); //This is the only one that isn't called via a UI button. This is called from the gameModeBase class when it's told the player has died.
 	UFUNCTION(BlueprintCallable)
 		void ChangeToStartupScreen();
-	UFUNCTION(BlueprintPure)
-		int GetFinalScore();
-
 
 	
-
 	//******************************  PRIVATE  ******************************
 private:
 	//---------------------------------------------------------------------
 	//						       VARIABLES
 	//---------------------------------------------------------------------
 	UPROPERTY()
-		FString gameplayScreen = "GameplayScreen";
+		FString gameplayScreen = "GameplayScreen"; //Strings that hold the names of the screens we want to switch to.
 	UPROPERTY()
 		FString startupScreen = "StartupScreen";
 	UPROPERTY()

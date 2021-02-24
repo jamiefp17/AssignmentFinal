@@ -8,7 +8,6 @@
 
 //Forward Declarations.
 class ABaseCharacter;
-//class ACustomPlayerController;
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -39,5 +38,7 @@ public:
 	//						       VARIABLES
 	//---------------------------------------------------------------------
 	UPROPERTY()
-		FVector spawnLocation;
+		FVector spawnLocation; //World space projectile will spawn at.
+	UPROPERTY()
+		FRotator spawnRotation; //Rotation projectile will spawn facing.
 };
