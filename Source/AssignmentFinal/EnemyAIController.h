@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "AIController.h"
 #include "Kismet/GameplayStatics.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "Engine/TargetPoint.h"
 #include "EnemyAIController.generated.h"
 
 UCLASS()
@@ -22,7 +24,8 @@ public:
 	//---------------------------------------------------------------------
 	//                    INCLUDES TO OTHER CLASSES
 	//---------------------------------------------------------------------
-	APawn* PlayerCharacter; //Automatically aquires the player in order to track.
+	APawn* playerCharacter; //Automatically aquires the player in order to track.
+	
 
 
 	//---------------------------------------------------------------------
@@ -30,6 +33,19 @@ public:
 	//---------------------------------------------------------------------
 	virtual void Tick(float DeltaTime);
 
-	
+
+	//******************************  PRIVATE  ******************************
+private:
+	UPROPERTY(EditAnywhere)
+		UBehaviorTree* enemyBehavour;
+	UPROPERTY()
+		FName playerPosition = "playerPosition";
+	UPROPERTY()
+		TArray<AActor*> waypoints;
+	UPROPERTY()
+		AActor* currentWaypoint;
+
+	UFUNCTION()
+		AActor* ChooseWaypoint();
 
 };
