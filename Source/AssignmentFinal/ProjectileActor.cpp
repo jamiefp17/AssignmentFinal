@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Jamie Pickering - Games Development Assignment 1
 
 
 #include "ProjectileActor.h"
@@ -20,6 +20,7 @@ AProjectileActor::AProjectileActor()
 	projectileMovement->InitialSpeed = projectileSpeed;
 	InitialLifeSpan = projectileLife;
 
+	//A reference to the cube that will be affected by forces upon collision.
 	forceActor = CreateDefaultSubobject<AForceActor>(TEXT("Force Actor"));
 }
 
@@ -27,7 +28,7 @@ void AProjectileActor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	OnActorHit.AddDynamic(this, &AProjectileActor::OnHit); //Dynamic deegate.
+	OnActorHit.AddDynamic(this, &AProjectileActor::OnHit); //Dynamic deegate handling landed projectile shots.
 }
 
 void AProjectileActor::OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit)
@@ -36,7 +37,7 @@ void AProjectileActor::OnHit(AActor* SelfActor, AActor* OtherActor, FVector Norm
 
 	if (OtherActor != NULL && ProjectileOwner != NULL) //Makes sure the references aren't null.
 	{
-		if (OtherActor->GetClass()->IsChildOf(ABaseCharacter::StaticClass()))
+		if (OtherActor->GetClass()->IsChildOf(ABaseCharacter::StaticClass())) //An enemy or the player.
 		{
 			UGameplayStatics::ApplyDamage(OtherActor, projectileDamage, ProjectileOwner->GetInstigatorController(), this, UDamageType::StaticClass()); //Uses the applyDamage function.
 			

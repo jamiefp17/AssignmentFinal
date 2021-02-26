@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Jamie Pickering - Games Development Assignment 1
 
 #pragma once
 
@@ -109,4 +109,6 @@ private:
 		FVector springArmSocketOffset = { 0.0f, 0.0f, 40.0f }; //The socket offset for the spring arm, lifting the camera so it doesn't just look dead on.
 	UPROPERTY(VisibleAnywhere)
 		FVector projectileSpawnLocalPosition = { 400.0f, -30.0f, -50.0f }; //The relative position of the projectile spawn-point from the spring arm.
+	UPROPERTY()
+		FName player = "Player";
 };

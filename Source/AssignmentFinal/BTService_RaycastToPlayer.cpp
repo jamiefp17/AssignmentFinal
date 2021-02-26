@@ -11,33 +11,26 @@ void UBTService_RaycastToPlayer::TickNode(UBehaviorTreeComponent& OwnerComp, uin
 {
 	Super::TickNode(OwnerComp, NodeMemory, DeltaTime);
 
-	AAIController* enemyController = OwnerComp.GetAIOwner();
+	AAIController* enemyController = OwnerComp.GetAIOwner(); //Gets the controller for the enemy AI.
 	
-	ABaseCharacter* enemy = Cast<ABaseCharacter>(enemyController->GetPawn()); //Needs to get reference here, or it doesn't know what the enemy is.
-	APawn* playerCharacter = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-	FName playerPosition = "playerPosition";
+	ABaseCharacter* enemy = Cast<ABaseCharacter>(enemyController->GetPawn()); //A reference to the enemy that is looking for the player.
+	APawn* playerCharacter = UGameplayStatics::GetPlayerPawn(GetWorld(), 0); //Finds the player character.
 
-	if (enemy != nullptr)
+	if (enemy != nullptr) //Check to prevent crashing.
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("Might hit"));
-		FVector enemyPositionRaycast = enemy->GetActorLocation();
-		FVector playerPositionRaycast = playerCharacter->GetActorLocation();
+		FVector enemyPositionRaycast = enemy->GetActorLocation(); //Location of the enemy.
+		FVector playerPositionRaycast = playerCharacter->GetActorLocation(); //Location of the player.
 
-		float castRange = 1000.0f;
-		FHitResult hit;
-		bool bMissedPlayer = GetWorld()->LineTraceSingleByChannel(hit, enemyPositionRaycast, playerPositionRaycast, ECC_Visibility);
+		FHitResult hit; //Used to detect what has been hit by the raytrace.
+		bool bMissedPlayer = GetWorld()->LineTraceSingleByChannel(hit, enemyPositionRaycast, playerPositionRaycast, ECC_Visibility); //Setting a bool to check if there is line of sight with the player.
 
 		if (!bMissedPlayer)
 		{
-			//UE_LOG(LogTemp, Warning, TEXT("Hit something"));
-			OwnerComp.GetBlackboardComponent()->SetValueAsVector(playerPosition, playerCharacter->GetActorLocation());
-
+			OwnerComp.GetBlackboardComponent()->SetValueAsVector(playerPosition, playerCharacter->GetActorLocation()); //If there is line of sight, update the known location of the player.
 		}
 		else
 		{
-			OwnerComp.GetBlackboardComponent()->ClearValue(playerPosition);
+			OwnerComp.GetBlackboardComponent()->ClearValue(playerPosition); //Wipe the enemies knowledge of the player's location.
 		}
 	}
-
-
 }

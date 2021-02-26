@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Jamie Pickering - Games Development Assignment 1
 
 #pragma once
 
@@ -62,5 +62,5 @@ private:
 	UPROPERTY(VisibleAnywhere)
 		FVector projectileSize = { 0.3f, 0.3f, 0.3f }; //The scale of the projectile, relative to the sphere static mesh.
 	UPROPERTY()
-		FName forceBox = "Force";
+		FName forceBox = "Force"; //Name used to check actor tag when a collision is made.
 };

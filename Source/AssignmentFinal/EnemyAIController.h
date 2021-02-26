@@ -18,45 +18,46 @@ class ASSIGNMENTFINAL_API AEnemyAIController : public AAIController
 	
 	//******************************  PROTECTED  ******************************
 protected:
+	//---------------------------------------------------------------------
+	//                            FUNCTIONS
+	//---------------------------------------------------------------------
 	virtual void BeginPlay() override;
 
 
 	//******************************  PUBLIC  ******************************
 public:
 	//---------------------------------------------------------------------
-	//                    INCLUDES TO OTHER CLASSES
+	//                            FUNCTIONS
 	//---------------------------------------------------------------------
-	
+	virtual void Tick(float DeltaTime);
 
 	UFUNCTION(BlueprintCallable)
-		void AttackPlayer();
-	
-	UFUNCTION(BlueprintCallable)
-		void RaycastToPlayer();
+		void AttackPlayer(); //Tells the enemy to fire at the player character.
+
+
+	//******************************  PRIVATE  ******************************
+private:
+	//---------------------------------------------------------------------
+	//                    INCLUDES TO OTHER CLASSES
+	//---------------------------------------------------------------------
+	UPROPERTY(EditAnywhere)
+		UBehaviorTree* enemyBehavour; //The behavour tree that the enemy uses, controlling movement and attacking.
+	UPROPERTY()
+		TArray<AActor*> waypoints; //An array of all the waypoints that exist in the world, so the enemies can choose a random one to move to.
+	UPROPERTY()
+		AActor* currentWaypoint; //The waypoint that the enemy is currently targeting to move towards.
 
 
 	//---------------------------------------------------------------------
 	//                            FUNCTIONS
 	//---------------------------------------------------------------------
-	virtual void Tick(float DeltaTime);
-
-
-	//******************************  PRIVATE  ******************************
-private:
-	
-
-	UPROPERTY(EditAnywhere)
-		UBehaviorTree* enemyBehavour;
-	
-	UPROPERTY()
-		FName waypointPosition = "waypointPosition";
-	UPROPERTY()
-		TArray<AActor*> waypoints;
-	UPROPERTY()
-		AActor* currentWaypoint;
-
 	UFUNCTION()
-		AActor* ChooseWaypoint();
-	
+		AActor* ChooseWaypoint(); //Returns a random waypoint that the enemy character will then set as its target.
 
+	
+	//---------------------------------------------------------------------
+	//						       VARIABLES
+	//---------------------------------------------------------------------
+	UPROPERTY()
+		FName waypointPosition = "waypointPosition"; //The name of the waypoint vector that's held in the blackboard.
 };

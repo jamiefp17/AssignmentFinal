@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Jamie Pickering - Games Development Assignment 1
 
 
 #include "EnemyAIController.h"
@@ -6,9 +6,6 @@
 void AEnemyAIController::BeginPlay() 
 {
 	Super::BeginPlay();
-
-	//playerCharacter = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-	//currentWaypoint = ChooseWaypoint();
 
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATargetPoint::StaticClass(), waypoints);
 	RunBehaviorTree(enemyBehavour);
@@ -18,43 +15,15 @@ void AEnemyAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	currentWaypoint = ChooseWaypoint(); //TEMP SOLUTION. MOVE THIS TO A BEHAVOUR TREE FUNCTION LATER
-	GetBlackboardComponent()->SetValueAsVector(waypointPosition, currentWaypoint->GetActorLocation());
+	currentWaypoint = ChooseWaypoint(); //Chooses a waypoint to move to after the previous one has been successful.
+	GetBlackboardComponent()->SetValueAsVector(waypointPosition, currentWaypoint->GetActorLocation()); //Sets the waypoint that was chosen as the target in the blackboard component.
 }
 
 AActor* AEnemyAIController::ChooseWaypoint()
 {
-	int index = FMath::RandRange(0, waypoints.Num() - 1);
-	return waypoints[index];
+	int index = FMath::RandRange(0, waypoints.Num() - 1); //Random number within the bounds of the number of waypoints.
+	return waypoints[index]; //Returns the index number.
 
-}
-
-void AEnemyAIController::RaycastToPlayer()
-{
-	//UE_LOG(LogTemp, Warning, TEXT("Will hit"));
-	//enemy = Cast<ABaseCharacter>(GetPawn()); //Needs to get reference here, or it doesn't know what the enemy is.
-	//if (enemy != nullptr)
-	//{
-	//	//UE_LOG(LogTemp, Warning, TEXT("Might hit"));
-	//	FVector enemyPositionRaycast = enemy->GetActorLocation();
-	//	FVector playerPositionRaycast = playerCharacter->GetActorLocation();
-
-	//	float castRange = 1000.0f;
-	//	FHitResult hit;
-	//	bool bMissedPlayer = GetWorld()->LineTraceSingleByChannel(hit, enemyPositionRaycast, playerPositionRaycast, ECC_Visibility);
-
-	//	if (!bMissedPlayer)
-	//	{
-	//		//UE_LOG(LogTemp, Warning, TEXT("Hit something"));
-	//		GetBlackboardComponent()->SetValueAsVector(playerPosition, playerCharacter->GetActorLocation());
-
-	//	}
-	//	else
-	//	{
-	//		GetBlackboardComponent()->ClearValue(playerPosition);
-	//	}
-	//}
-	
 }
 
 void AEnemyAIController::AttackPlayer()

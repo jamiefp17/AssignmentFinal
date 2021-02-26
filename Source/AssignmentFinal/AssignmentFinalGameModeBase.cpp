@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+// Jamie Pickering - Games Development Assignment 1
 
 
 #include "AssignmentFinalGameModeBase.h"

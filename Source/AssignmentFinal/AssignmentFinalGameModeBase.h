@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+// Jamie Pickering - Games Development Assignment 1
 
 #pragma once
 
@@ -57,7 +57,7 @@ private:
 	UFUNCTION()
 		void EndGame(); //Wraps everything up, ending the game.
 	UFUNCTION()
-		void SpawnEnemy();
+		void SpawnEnemy(); //Spawns in an enemy character to fight the player.
 	
 
 	//---------------------------------------------------------------------

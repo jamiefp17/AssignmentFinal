@@ -19,7 +19,7 @@ public:
 	//---------------------------------------------------------------------
 	AForceActor();
 	UFUNCTION()
-		void OnProjectileHit(AActor* box); //Called by the projectile class when 
+		void OnProjectileHit(AActor* box); //Called by the projectile class when a collision has occured.
 
 
 	//******************************  PRIVATE  ******************************

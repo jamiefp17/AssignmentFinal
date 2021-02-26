@@ -8,6 +8,7 @@ AForceActor::AForceActor()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
+	//Sets up basic static mesh.
 	boxMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Box Mesh"));
 	boxMesh->SetupAttachment(RootComponent);
 }

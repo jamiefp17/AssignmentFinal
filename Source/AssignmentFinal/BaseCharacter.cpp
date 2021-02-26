@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Jamie Pickering - Games Development Assignment 1
 
 #include "BaseCharacter.h"
 #include "CustomPlayerController.h"
@@ -44,7 +44,6 @@ void ABaseCharacter::BeginPlay()
 
 	collisionBox->OnComponentBeginOverlap.AddDynamic(this, &ABaseCharacter::OnOverlapBegin); //Sets the functions as delegates.
 	gameModeBaseRef = Cast<AAssignmentFinalGameModeBase>(UGameplayStatics::GetGameMode(GetWorld())); //Casts included class in order to use it.
-
 }
 
 void ABaseCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -56,14 +55,12 @@ void ABaseCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
 		{
 			pointTrigger->OnCollisionWithPlayer(OtherActor, gameModeBaseRef); //Calls the collision fuction within the pointTrigger class.
 		}
-		
 	}
 }
 
 void ABaseCharacter::PlayProjectileSound()
 {
-	UGameplayStatics::PlaySoundAtLocation(GetWorld(), shootingSound, playerMovement->spawnLocation);
-	//MAKE ENEMY SHOTS DIFFERENT PITCH BY CHECKING THE TAG
+	UGameplayStatics::PlaySoundAtLocation(GetWorld(), shootingSound, playerMovement->spawnLocation); //Plays a specified audio clip when a projectile has been fired.
 }
 
 float ABaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
@@ -72,7 +69,7 @@ float ABaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageE
 	if (characterHealth < 1.0f) //The character has run out of health, and is now "dead".
 	{
 		Destroy(); //The character is removed from the scene.
-		if (ActorHasTag("Player")) //Now that the character is gone, we need to decide how the game will react to it. If the character was tagged as being the player, the game should end.
+		if (ActorHasTag(player)) //Now that the character is gone, we need to decide how the game will react to it. If the character was tagged as being the player, the game should end.
 		{
 			gameModeBaseRef->PlayerDied();
 		}
