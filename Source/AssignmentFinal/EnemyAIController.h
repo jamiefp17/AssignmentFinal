@@ -7,6 +7,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Engine/TargetPoint.h"
+#include "BaseCharacter.h"
+#include "ProjectileActor.h"
 #include "EnemyAIController.generated.h"
 
 UCLASS()
@@ -24,8 +26,13 @@ public:
 	//---------------------------------------------------------------------
 	//                    INCLUDES TO OTHER CLASSES
 	//---------------------------------------------------------------------
-	APawn* playerCharacter; //Automatically aquires the player in order to track.
 	
+
+	UFUNCTION(BlueprintCallable)
+		void AttackPlayer();
+	
+	UFUNCTION(BlueprintCallable)
+		void RaycastToPlayer();
 
 
 	//---------------------------------------------------------------------
@@ -36,10 +43,13 @@ public:
 
 	//******************************  PRIVATE  ******************************
 private:
+	
+
 	UPROPERTY(EditAnywhere)
 		UBehaviorTree* enemyBehavour;
+	
 	UPROPERTY()
-		FName playerPosition = "playerPosition";
+		FName waypointPosition = "waypointPosition";
 	UPROPERTY()
 		TArray<AActor*> waypoints;
 	UPROPERTY()
@@ -47,5 +57,6 @@ private:
 
 	UFUNCTION()
 		AActor* ChooseWaypoint();
+	
 
 };
